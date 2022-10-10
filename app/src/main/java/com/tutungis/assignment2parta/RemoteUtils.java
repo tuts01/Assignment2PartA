@@ -5,10 +5,14 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Class containing methods for connections to remote REST services
@@ -19,7 +23,8 @@ import java.net.URL;
  * @last_modified   9/10/2022 0:05
  */
 public class RemoteUtils {
-    public static HttpURLConnection openConnection(String urlStr, Activity uiActivity)
+    public static HttpURLConnection openConnection(String urlStr,
+                                                   Activity uiActivity)
     {
         HttpURLConnection connection = null;
 
@@ -45,5 +50,51 @@ public class RemoteUtils {
         }
 
         return connection;
+    }
+    
+    public static boolean checkConnection(HttpURLConnection connection,
+                                          Activity uiActivity)
+    {
+        try
+        {
+            if(connection.getResponseCode() == HttpURLConnection.HTTP_OK) return true;
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+            uiActivity.runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    Toast.makeText(uiActivity, "Unable to connect to server",
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        
+        return false;
+    }
+    
+    public static String getJSONString(HttpURLConnection connection,
+                                       Activity uiActivity)
+    {
+        try
+        {
+            return IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8);
+        }
+        catch(IOException e)
+        {
+            uiActivity.runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run() {
+                    Toast.makeText(uiActivity,"Error retrieving data from server",
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+            
+            return "";
+        }
     }
 }
