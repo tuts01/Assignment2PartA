@@ -1,20 +1,28 @@
 package com.tutungis.assignment2parta;
 
 import android.app.Activity;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
+/**
+ * Callable class designed to retrieve user details from REST
+ *
+ * @class           UserRetrievalTask
+ * @implements      Callable
+ * @implements      Urls
+ * @author          Tristan S. Tutungis
+ * @date_created    9/10/2022
+ * @last_modified   10/10/2022 10:43
+ */
 public class UserRetrievalTask implements Callable<ArrayList<User>>, Urls
 {
-    private Activity uiActivity;
+    private final Activity uiActivity;
 
     public UserRetrievalTask(Activity uiActivity)
     {
@@ -22,7 +30,7 @@ public class UserRetrievalTask implements Callable<ArrayList<User>>, Urls
     }
     
     public ArrayList<User> call(){
-        ArrayList<User> users = new ArrayList<User>();
+        ArrayList<User> users = new ArrayList<>();
         String dataStr;
         HttpURLConnection connection = RemoteUtils.openConnection(Urls.USERS_URL, uiActivity);
 
