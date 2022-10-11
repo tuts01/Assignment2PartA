@@ -1,14 +1,17 @@
 package com.tutungis.assignment2parta;
 
+import java.io.Serializable;
+
 /**
  * Model class containing user details
  *
  * @class           User
+ * @implements      Serializable
  * @author          Tristan S. Tutungis
  * @date_created    8/10/2022
- * @last_modified   9/10/2022 0:01
+ * @last_modified   10/10/2022 11:34
  */
-public class User
+public class User implements Serializable
 {
     private final int id;
     private final String name;

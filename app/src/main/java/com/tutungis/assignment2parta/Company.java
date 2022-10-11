@@ -1,14 +1,17 @@
 package com.tutungis.assignment2parta;
 
+import java.io.Serializable;
+
 /**
  * Model class containing company details
  *
  * @class           Company
+ * @implements      Serializable
  * @author          Tristan S. Tutungis
  * @date_created    8/10/2022
- * @last_modified   9/10/2022 10:52
+ * @last_modified   11/10/2022 0:27
  */
-public class Company
+public class Company implements Serializable
 {
     private final String name;
     private final String catchphrase;

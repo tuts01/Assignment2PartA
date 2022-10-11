@@ -1,14 +1,17 @@
 package com.tutungis.assignment2parta;
 
+import java.io.Serializable;
+
 /**
  * Model class containing address details
  *
  * @class           Address
+ * @implements      Serializable
  * @author          Tristan S. Tutungis
  * @date_created    8/10/2022
- * @last_modified   9/10/2022 11:03
+ * @last_modified   11/10/2022 0:27
  */
-public class Address
+public class Address implements Serializable
 {
     
     private final String street;
