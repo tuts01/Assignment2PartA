@@ -3,7 +3,6 @@ package com.tutungis.assignment2parta;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;

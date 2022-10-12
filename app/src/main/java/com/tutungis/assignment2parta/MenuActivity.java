@@ -1,11 +1,13 @@
 package com.tutungis.assignment2parta;
 
+import android.os.Bundle;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -17,22 +19,48 @@ import java.util.concurrent.TimeoutException;
 
 public class MenuActivity extends AppCompatActivity
 {
+    private static final String USERS = "users";
+    
+    private ArrayList<User> users;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        UserRetrievalTask task = new UserRetrievalTask(MenuActivity.this);
-        Future<ArrayList<User>> future = executorService.submit(task);
-
-        RecyclerView rv = findViewById(R.id.userRecyclerView);
-        rv.setLayoutManager(new LinearLayoutManager(
-                MenuActivity.this, LinearLayoutManager.VERTICAL, false));
-        ArrayList<User> users = getUsers(future);
-        rv.setAdapter(new UserAdapter(MenuActivity.this, users));
+        if(savedInstanceState == null)
+        {
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            UserRetrievalTask task = new UserRetrievalTask(MenuActivity.this);
+            Future<ArrayList<User>> future = executorService.submit(task);
+    
+            RecyclerView rv = findViewById(R.id.userRecyclerView);
+            rv.setLayoutManager(new LinearLayoutManager(
+                    MenuActivity.this, LinearLayoutManager.VERTICAL, false));
+            users = getUsers(future);
+            rv.setAdapter(new UserAdapter(MenuActivity.this, users));
+        }
+    }
+    
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState)
+    {
+        outState.putSerializable(USERS, users);
+        super.onSaveInstanceState(outState);
+    }
+    
+    @Override
+    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState)
+    {
+        if(savedInstanceState != null)
+        {
+            RecyclerView rv = findViewById(R.id.userRecyclerView);
+            rv.setLayoutManager(new LinearLayoutManager(
+                    MenuActivity.this, LinearLayoutManager.VERTICAL, false));
+            users = (ArrayList<User>) savedInstanceState.get(USERS);
+            rv.setAdapter(new UserAdapter(MenuActivity.this, users));
+            super.onRestoreInstanceState(savedInstanceState);
+        }
     }
 
     private ArrayList<User> getUsers(Future<ArrayList<User>> future)

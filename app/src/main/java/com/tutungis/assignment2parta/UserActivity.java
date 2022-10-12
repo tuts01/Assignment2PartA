@@ -8,10 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,21 +56,17 @@ public class UserActivity extends AppCompatActivity {
         catchphrase.setText(user.getCompany().getCatchphrase());
         bs.setText(user.getCompany().getBs());
         
-        button.setOnClickListener(new View.OnClickListener()
+        button.setOnClickListener(view ->
         {
-            @Override
-            public void onClick(View view)
-            {
-                ExecutorService executorService = Executors.newSingleThreadExecutor();
-                PostRetrievalTask task = new PostRetrievalTask(UserActivity.this, user.getId());
-                Future<ArrayList<Post>> future = executorService.submit(task);
-                
-                RecyclerView rv = findViewById(R.id.postRecyclerView);
-                rv.setLayoutManager(new LinearLayoutManager(
-                        UserActivity.this, LinearLayoutManager.VERTICAL, false));
-                posts = getPosts(future);
-                rv.setAdapter(new PostAdapter(UserActivity.this, posts));
-            }
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            PostRetrievalTask task = new PostRetrievalTask(UserActivity.this, user.getId());
+            Future<ArrayList<Post>> future = executorService.submit(task);
+            
+            RecyclerView rv = findViewById(R.id.postRecyclerView);
+            rv.setLayoutManager(new LinearLayoutManager(
+                    UserActivity.this, LinearLayoutManager.VERTICAL, false));
+            posts = getPosts(future);
+            rv.setAdapter(new PostAdapter(UserActivity.this, posts));
         });
     }
     

@@ -20,8 +20,10 @@ import java.util.concurrent.Callable;
  * @date_created    9/10/2022
  * @last_modified   10/10/2022 10:43
  */
-public class UserRetrievalTask implements Callable<ArrayList<User>>, Urls
+public class UserRetrievalTask implements Callable<ArrayList<User>>
 {
+    private static final String USERS_URL = "https://jsonplaceholder.typicode.com/users";
+    
     private final Activity uiActivity;
 
     public UserRetrievalTask(Activity uiActivity)
@@ -32,7 +34,7 @@ public class UserRetrievalTask implements Callable<ArrayList<User>>, Urls
     public ArrayList<User> call(){
         ArrayList<User> users = new ArrayList<>();
         String dataStr;
-        HttpURLConnection connection = RemoteUtils.openConnection(Urls.USERS_URL, uiActivity);
+        HttpURLConnection connection = RemoteUtils.openConnection(USERS_URL, uiActivity);
 
         if(connection != null)
         {

@@ -1,7 +1,6 @@
 package com.tutungis.assignment2parta;
 
 import android.app.Activity;
-import android.net.Uri;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,8 +20,10 @@ import java.util.concurrent.Callable;
  * @date_created    10/10/2022
  * @last_modified   10/10/2022 13:38
  */
-public class PostRetrievalTask implements Callable<ArrayList<Post>>, Urls
+public class PostRetrievalTask implements Callable<ArrayList<Post>>
 {
+    private static final String POSTS_URL = "https://jsonplaceholder.typicode.com/posts";
+    
     private final Activity uiActivity;
     private final int userId;
 
@@ -38,7 +39,7 @@ public class PostRetrievalTask implements Callable<ArrayList<Post>>, Urls
         String dataStr;
 
         HttpURLConnection connection = RemoteUtils.openConnection(
-                Urls.POSTS_URL + "?userId=" + this.userId, uiActivity);
+                POSTS_URL + "?userId=" + this.userId, uiActivity);
 
         if(connection != null) {
             if (RemoteUtils.checkConnection(connection, uiActivity)) {

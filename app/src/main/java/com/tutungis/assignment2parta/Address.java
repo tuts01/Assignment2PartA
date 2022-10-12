@@ -33,37 +33,7 @@ public class Address implements Serializable
         this.latitude = latitude;
         this.longitude = longitude;
     }
-    
-    public String getStreet()
-    {
-        return this.street;
-    }
-    
-    public String getSuite()
-    {
-        return this.suite;
-    }
-    
-    public String getCity()
-    {
-        return this.city;
-    }
-    
-    public String getZipcode()
-    {
-        return this.zipcode;
-    }
-    
-    public String getLatitude()
-    {
-        return this.latitude;
-    }
-    
-    public String getLongitude()
-    {
-        return this.longitude;
-    }
-    
+
     @NonNull @Override
     public String toString()
     {
