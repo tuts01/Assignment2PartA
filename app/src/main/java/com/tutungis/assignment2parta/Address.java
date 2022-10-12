@@ -1,5 +1,7 @@
 package com.tutungis.assignment2parta;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 /**
@@ -60,5 +62,12 @@ public class Address implements Serializable
     public String getLongitude()
     {
         return this.longitude;
+    }
+    
+    @NonNull @Override
+    public String toString()
+    {
+        return suite + " " + street + "\n" + city + " " + zipcode +
+                "\nCoordinates: " + latitude + ", " + longitude;
     }
 }
